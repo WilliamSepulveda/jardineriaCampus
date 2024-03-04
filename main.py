@@ -1,8 +1,8 @@
-from tabulate import tabulate
+ 
 import modules.getClients as cliente
 
-print(tabulate(cliente.getAllClientPaisRegionCiudad("Australia"),tablefmt= "grid"))
+# print(cliente.getAllClientcodigo_empleado_rep_ventas("codigo_empleado_rep_ventas"))
 
-# print(tabulate(cliente.getAllClientPaisRegionCiudad("Australia")))
+print(cliente.getAllClientPaisRegionCiudad("Australia"))
 
 
