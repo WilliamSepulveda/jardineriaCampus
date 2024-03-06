@@ -8,7 +8,7 @@ import modules.getEmpleados as empleados
 
 # print(tabulate(empleados.getAllNombreApellidoemail(7), tablefmt= 'gird'))
 
-print(tabulate(empleados.getAllNombrePuestoApellidoEmailJefe(), tablefmt= 'gird'))
+print(tabulate(Oficina.getAllCodigoCiudad(), tablefmt= 'gird'))
 
 
 
