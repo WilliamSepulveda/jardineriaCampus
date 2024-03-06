@@ -35,7 +35,7 @@
 #             )
 #         return NombrePuestoApellidoEmailJefe
     
-#Devuelve un listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas.
+#Devuelve un listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas
 import storage.empleado as em
 def getAllNombreApellidoPuestos():
     NombreApellidoPuestos = []
