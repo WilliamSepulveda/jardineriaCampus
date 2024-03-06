@@ -10,6 +10,8 @@ def getAllClientName():
     clienteName.append(codigoName)
     return clienteName
 
+import storage.cliente as cli
+
 def getOneClientCodigo(codigo):
     for val in cli.clientes:
         if(val.get('codigo_cliente') == codigo):
@@ -18,6 +20,7 @@ def getOneClientCodigo(codigo):
                 "nombre_cliente":val.get('nombre_cliente')
             }
         
+
 
         
 def getAllClientCreditCiudad(limiteCredit,ciudad):
@@ -41,22 +44,15 @@ def getAllClientPaisRegionCiudad(pais,region=None,ciudad=None):
               return clientZone 
 
 def getAllClientcodigo_empleado_rep_ventas(codigo_empleado):
-        clientZone = list()
+        clientCodigo = list()
         for val in cli.clientes:
             if(val.get('codigo_empleado' == codigo_empleado)):
                 return{
                     "codigo_empleado_rep_ventas":val.get('codigo_empleado'),
                     "nombre_empleado":val.get('nombre_empleao')                   
                 }
-            
-
-
-
-
-
-        clientZone.append(val)
-        return clientZone 
-
+            clientCodigo.append(val)
+        return clientCodigo 
 
      # val.get('pais') == pais and
         # (val.get('region') == region or val.get('region') ==None) or
