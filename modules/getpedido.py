@@ -57,3 +57,27 @@ def getAllPedidosEntregadosDosDiasAntes():
                     "fecha_de_entrega": pedido.get("fecha_entrega"),
                 })
     return pedidosEntregado
+
+
+
+# devuelve un listado de todos los pedidos que fueron rechazados en 2009
+import storage.pedido as pe
+from datetime import datetime
+
+def getAllListadoDePedidosRechazados2009():
+    pedidosrechazados = []
+    for pedido in pe.pedido:                 
+       if pedido.get("estado") == "Rechazado":
+        date_1 = "/".join(pedido.get("fecha_esperada").split("-")[::-1])
+        start = datetime.strptime(date_1, "%d/%m/%Y")
+        if start.year == 2009:
+
+            pedidosrechazados.append({
+                "estado": pedido.get("estado del pedido"),
+                "código_de_pedido": pedido.get("codigo_pedido"),
+                "código_de_cliente": pedido.get("codigo_cliente"),
+                "fecha_esperada": pedido.get("fecha_esperada")
+            }) 
+    return pedidosrechazados
+            
+          

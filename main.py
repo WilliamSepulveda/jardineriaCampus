@@ -4,7 +4,7 @@ import modules.getOficina as Oficina
 import modules.getEmpleados as empleados
 import modules.getpedido as pedido
 
-print(tabulate(pedido.getAllPedidosEntregadosDosDiasAntes(), tablefmt='rounded_grid'))
+print(tabulate(pedido.getAllListadoDePedidosRechazados2009(), tablefmt='rounded_grid'))
 
 
 
