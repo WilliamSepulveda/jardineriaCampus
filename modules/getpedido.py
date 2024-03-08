@@ -80,4 +80,20 @@ def getAllListadoDePedidosRechazados2009():
             }) 
     return pedidosrechazados
             
-          
+# devuelve un listado de todos los pedidos que han sido entregados en le mes de enero de cualquier año         
+import storage.pedido as pe
+from datetime import datetime
+
+def getAllListadoPedidosEntregadosMesEnero():
+    pedidosentregados = []
+    for pedido in pe.pedido:
+        if pedido.get("estado") == "Entregado":
+            date_1 = "/".join(pedido.get("fecha_entrega").split("-")[::-1])
+            start = datetime.strptime(date_1, "%d/%m/%Y")
+            if start.month == "january":
+
+                pedidosentregados.append({
+                    "estado": pedido.get("estado del pedido"),
+                    "fecha_de_entrega": pedido.get("fecha_entrega")
+                })
+    return pedidosentregados            
