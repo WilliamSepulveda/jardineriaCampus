@@ -41,5 +41,4 @@ def menu():
             2. la ciudad y el telefono de cada oficina segun el pais           
 
 """)
-    # if (opcion == 1):
-    #     print(tabulate(getAllCiudadTelefono(),headers="keys", tablefmt='rounded_grid'))
+   

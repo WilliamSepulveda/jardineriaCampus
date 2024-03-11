@@ -1,39 +1,39 @@
 # devuelve un listado con el nombre, apellidos, y email 
 # de los empleados cuyo  jefe tiene un codigo de jefe igual  a 7 
 
-# import storage.empleado as em
+import storage.empleado as em
+from tabulate import tabulate
 
-# def getAllNombreApellidoemail(codigo):
-#     NombreApellidoemail = []
-#     for val in em.empleados:
-#         if(val.get("codigo_jefe") == codigo):
-#             NombreApellidoemail.append(
-#                 {
-#                     "nombre": val.get("nombre"),
-#                     "Apellidos": f'{val.get("apellido1")} {val.get("apellido2")}',
-#                     "email": val.get("email"),
-#                     "jefe": val.get("codigo_jefe")
-#                 }
-#             )
-#     return NombreApellidoemail
+def getAllNombreApellidoemail(codigo):
+    NombreApellidoemail = []
+    for val in em.empleados:
+        if(val.get("codigo_jefe") == codigo):
+            NombreApellidoemail.append(
+                {
+                    "nombre": val.get("nombre"),
+                    "Apellidos": f'{val.get("apellido1")} {val.get("apellido2")}',
+                    "email": val.get("email"),
+                    "jefe": val.get("codigo_jefe")
+                }
+            )
+    return NombreApellidoemail
 
-# # devuelve el nombre, puesto, apellido y email del jefe de la empresa 
-# import storage.empleado as em 
+# devuelve el nombre, puesto, apellido y email del jefe de la empresa 
 
-# def getAllNombrePuestoApellidoEmailJefe():
-#     NombrePuestoApellidoEmailJefe = []
-#     for val in em.empleados:
-#         if(val.get("codigo_jefe")) == None:
-#             NombrePuestoApellidoEmailJefe.append(      
-#                 {                  
-#                 "puesto": val.get("puesto"),
-#                 "nombre": val.get("nombre"),
-#                 "apellidos": f'{val.get("apellido1")} {val.get("apellido2")})',
-#                 "email": val.get("email"),
-#                 "jefe": val.get("jefe") 
-#                 }
-#             )
-#         return NombrePuestoApellidoEmailJefe
+def getAllNombrePuestoApellidoEmailJefe(codigo):
+    NombrePuestoApellidoEmailJefe = []
+    for val in em.empleados:
+        if(val.get("codigo_jefe")) == codigo:
+            NombrePuestoApellidoEmailJefe.append(
+                {                  
+                "puesto": val.get("puesto"),
+                "nombre": val.get("nombre"),
+                "apellidos": f'{val.get("apellido1")} {val.get("apellido2")})',
+                "email": val.get("email"),
+                "jefe": val.get("jefe") 
+                }
+            )          
+    return NombrePuestoApellidoEmailJefe
     
 #Devuelve un listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas
 import storage.empleado as em
@@ -47,9 +47,47 @@ def getAllNombreApellidoPuestos():
             "puesto": val.get("puesto")
         })
     return NombreApellidoPuestos 
-        
-     
+
+def getAllNombresApellidosPuestosRepresentantesDeVentas():
+    nombreApellidosPuestos = list()
+    for val in em.empleados:
+        if(val.get("puesto") != 'representante de ventas: '):
+            {
+                "nombre": val.get("nombre"),
+                "apellidos": f'{val.get("apellido_1"),{val.get("apellido_2")}}',
+                "puesto": val.get("puesto")
+            }
+    return nombreApellidosPuestos
 
 
-            
-        
+def menu():
+    print(""" 
+
+ ___ ___    ___  ____   __ __        ___  ___ ___  ____  _        ___   ____  ___     ___   _____    
+|   |   |  /  _]|    \ |  |  |      /  _]|   |   ||    \| |      /  _] /    ||   \   /   \ / ___/    
+| _   _ | /  [_ |  _  ||  |  |     /  [_ | _   _ ||  o  ) |     /  [_ |  o  ||    \ |     (   \_     
+|  \_/  ||    _]|  |  ||  |  |    |    _]|  \_/  ||   _/| |___ |    _]|     ||  D  ||  O  |\__  |    
+|   |   ||   [_ |  |  ||  :  |    |   [_ |   |   ||  |  |     ||   [_ |  _  ||     ||     |/  \ |    
+|   |   ||     ||  |  ||     |    |     ||   |   ||  |  |     ||     ||  |  ||     ||     |\    |    
+|___|___||_____||__|__| \__,_|    |_____||___|___||__|  |_____||_____||__|__||_____| \___/  \___|    
+                                                                                                                                                                       
+        1. Obtener el nombre, apellidos y email de los empleados con el mismo codigo del jefe.
+        2. Obtener la informacion de su jefe.
+        3. Obtener el listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas.
+
+""")
+    opcion = int(input("\nseleccione una de las opciones: "))
+
+    if(opcion ==1):
+            codigo = int(input("ingrese el codigo del jefe: "))
+            print(tabulate(getAllNombreApellidoemail(codigo), headers="keys", tablefmt='rounded_grid'))
+
+    elif(opcion ==2):
+            codigo = int(input("ingrese el codigo del jefe para obtener la informacion: "))
+            print(tabulate(getAllNombrePuestoApellidoEmailJefe(codigo), headers="keys", tablefmt='rounded_grid'))    
+
+    elif (opcion == 3):
+        print(tabulate(getAllNombresApellidosPuestosRepresentantesDeVentas(), headers="keys", tablefmt="github"))
+    elif (opcion == 0):  
+     else:   
+        print("opcion no valida")

@@ -112,9 +112,12 @@ d8888b. d88888b d8888b.  .d88b.  d8888b. d888888b d88888b      d8888b. d88888b  
     opcion = int(input("\nseleccione una de las opciones: "))
     if(opcion ==1):
         print(tabulate(getAllClientName(),headers="keys", tablefmt='rounded_grid'))
+
     elif(opcion ==2):
         codigo = int(input("ingrese el codigo del cliente: "))
         print(tabulate(getOneClientCodigo(codigo),headers="keys", tablefmt='rounded_grid'))
+
+        
     elif(opcion == 3):
         limite = float(input("ingrese el limite de credito de los clientes que deseas verfificar: "))
         ciudad = input("ingrese enl nombre de la ciudad que desea filtrar los clientes: ")
