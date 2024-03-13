@@ -74,7 +74,7 @@ def menu():
         1. Obtener el nombre, apellidos y email de los empleados con el mismo codigo del jefe.
         2. Obtener la informacion de su jefe.
         3. Obtener el listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas.
-
+        0. devolver 
 """)
     opcion = int(input("\nseleccione una de las opciones: "))
 
@@ -87,7 +87,9 @@ def menu():
             print(tabulate(getAllNombrePuestoApellidoEmailJefe(codigo), headers="keys", tablefmt='rounded_grid'))    
 
     elif (opcion == 3):
-        print(tabulate(getAllNombresApellidosPuestosRepresentantesDeVentas(), headers="keys", tablefmt="github"))
-    elif (opcion == 0):  
-     else:   
+            codigo = int(input("ingrese codigo"))
+            print(tabulate(getAllNombresApellidosPuestosRepresentantesDeVentas(), headers="keys", tablefmt="github"))
+    elif (opcion == 0):
+         pass
+    else:   
         print("opcion no valida")
