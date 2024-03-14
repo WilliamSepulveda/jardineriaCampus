@@ -31,12 +31,6 @@ def getAllPedidosEntregadosAtrasadosDeTiempo():
 # devuelve un listado con el codigo del pedido, codigo cliente, fecha esperada y fecha de entrega de los pedidios cuya 
 #fecha de entrega ha sido al menos dos dias antes de la fecha esperada 
 
-import storage.pedido as pe
-from datetime import datetime
-
-import storage.pedido as pe
-from datetime import datetime
-
 def getAllPedidosEntregadosDosDiasAntes():
     pedidosEntregado = []
     for pedido in pe.pedido:
@@ -61,8 +55,6 @@ def getAllPedidosEntregadosDosDiasAntes():
 
 
 # devuelve un listado de todos los pedidos que fueron rechazados en 2009
-import storage.pedido as pe
-from datetime import datetime
 
 def getAllListadoDePedidosRechazados2009():
     pedidosrechazados = []
@@ -81,8 +73,6 @@ def getAllListadoDePedidosRechazados2009():
     return pedidosrechazados
             
 # devuelve un listado de todos los pedidos que han sido entregados en le mes de enero de cualquier año         
-import storage.pedido as pe
-from datetime import datetime
 
 def getAllListadoPedidosEntregadosMesEnero():
     pedidosentregados = []

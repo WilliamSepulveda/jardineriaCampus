@@ -91,7 +91,8 @@ def getClientesPais(pais):
     return ClientesPais
 
 def menu():
-    print(f"""
+    while True:
+        print("""
 
 d8888b. d88888b d8888b.  .d88b.  d8888b. d888888b d88888b      d8888b. d88888b       .o88b. db      d888888b d88888b d8b   db d888888b d88888b .d8888. 
 88  `8D 88'     88  `8D .8P  Y8. 88  `8D `~~88~~' 88'          88  `8D 88'          d8P  Y8 88        `88'   88'     888o  88 `~~88~~' 88'     88'  YP 
@@ -109,28 +110,26 @@ d8888b. d88888b d8888b.  .d88b.  d8888b. d888888b d88888b      d8888b. d88888b  
                 5. obtener el nombre de contacto de un cliente (codigo del cliente)
                 6. obtener segun el pais        
         """)
-    opcion = int(input("\nseleccione una de las opciones: "))
-    if(opcion ==1):
-        print(tabulate(getAllClientName(),headers="keys", tablefmt='rounded_grid'))
-
-    elif(opcion ==2):
-        codigo = int(input("ingrese el codigo del cliente: "))
-        print(tabulate(getOneClientCodigo(codigo),headers="keys", tablefmt='rounded_grid'))
-
-        
-    elif(opcion == 3):
-        limite = float(input("ingrese el limite de credito de los clientes que deseas verfificar: "))
-        ciudad = input("ingrese enl nombre de la ciudad que desea filtrar los clientes: ")
-
-        print(tabulate(getAllClientCreditCiudad(limite,ciudad), headers="keys",tablefmt="rounded_grid"))
-    elif(opcion == 4):
-        pais = input('Ingresa el pais: ') 
-        region = input('Ingresa la region: ') or None
-        ciudad = input('Ingresa la ciudad: ') or None
-        print(tabulate(getAllClientPaisRegionCiudad(pais, region, ciudad), headers="keys", tablefmt="github"))
-    elif(opcion == 5):
-        codigo = int(input('Ingrese el codigo del cliente: '))
-        print(tabulate(getNombreContacto(codigo), headers="keys", tablefmt="rounded_grid"))
-    elif(opcion == 6):
-        pais = input('ingrese el pais: ')
-        print(tabulate(getClientesPais(pais), headers="keys", tablefmt="rounded_grid"))
+        opcion = int(input("\nSelecione una de las opciones: "))
+        if(opcion == 1):
+                print(tabulate(getAllClientName(), headers="keys", tablefmt="github"))
+        elif(opcion == 2):
+                codigoCliente = int(input("Ingrese el codigo del cliente: "))
+                print(tabulate(getOneClientCodigo(codigoCliente), headers="keys", tablefmt="github"))
+        elif(opcion == 3):
+                limite = float(input("Ingrese el limite de credito de los clientes que deseas vizualizar: "))
+                ciudad = input("Ingrese el nombre de la ciudad que deseas filtrar los clientes: ")
+                print(tabulate(getAllClientCreditCiudad(limite, ciudad), headers="keys", tablefmt="github"))
+        elif(opcion == 4):
+                pais = input('Ingresa el pais: ') 
+                region = input('Ingresa la region: ') or None
+                ciudad = input('Ingresa la ciudad: ') or None
+                print(tabulate(getAllClientPaisRegionCiudad(pais, region, ciudad), headers="keys", tablefmt="github"))
+        elif(opcion == 5):
+                codigo = int(input('Ingrese el codigo del cliente: '))
+                print(tabulate(getNombreContacto(codigo), headers="keys", tablefmt="rounded_grid"))
+        elif(opcion == 6):
+                pais = input('ingrese el pais: ')
+                print(tabulate(getClientesPais(pais), headers="keys", tablefmt="rounded_grid"))
+        elif(opcion == 0):
+                break
