@@ -1,5 +1,14 @@
 from tabulate import tabulate
+from modules.getproducto import getAllData
 import storage.cliente as cli
+import requests
+import storage.empleado as em
+
+
+def getAllDataEmpleado():
+    peticion = requests.get("http://172.16.100.136:5003")
+    data = peticion.json()
+    return data
 
 def getAllClientName():
     clienteName = list()
@@ -37,19 +46,39 @@ def getAllClientCreditCiudad(limiteCredit,ciudad):
             })
     return clienteCredit
         
-
-def getAllClientPaisRegionCiudad(pais,region=None,ciudad=None):
+# obtener todos los clientes de un pais, una region y una ciudad(pais, region, ciudad)
+def getAllClientPaisRegionCiudad(pais, region = None, ciudad = None):
     clientZone = list()
     for val in cli.clientes:
         if(val.get('pais') == pais):
 
-            if(pais != None or val.get('region' == pais)):
+            if(pais is None or val.get('region' == pais)):
                 clientZone.append(val)
             elif(val.get('pais' == None)):
 
               clientZone.append(val)
     return clientZone 
 
+def getClientCodePostal(pais, region=None, ciudad=None):
+    clientZone = list()
+    for val in cli.clientes():
+        if (val.get('pais') == pais):
+            if((region is None or val.get('region') == region)):
+                if((ciudad is None or val.get('ciudad') == ciudad)):
+                    clientZone.append(
+                        {
+                        "codigo": val.get('codigo_cliente'),
+                        "Responsable": val.get('nombre_cliente'),
+                        "Director": f"{val.get('nombre_contacto')} {val.get('apellido_contacto')}",
+                        "Telefono": val.get('telefono'),
+                        "Fax": val.get('fax'),
+                        "Direcciones": f"{val.get('linea_direccion1')} {val.get('linea_direccion2')}",
+                        "Origen": f"{val.get('pais')} {val.get('region')} {val.get('ciudad')} {val.get('codigo_postal')}",
+                        "Codigo del asesor": val.get('codigo_empleado_rep_ventas'),
+                        "Credito": val.get('limite_credito')
+
+                    })
+                    
 def getAllClientcodigo_empleado_rep_ventas(codigo_empleado):
         
         clientCodigo = list()
@@ -90,46 +119,81 @@ def getClientesPais(pais):
            )
     return ClientesPais
 
+def getCityEmploy0(ciudad):
+     clientecity = []
+     for val in getAllData():
+          if(val.get("ciudad")) ==  ciudad and (val.get("codigo_empleado_rep_ventas") ==11) or (val.get("codigo_empleado_rep_ventas") == 30):
+              clientecity.append(
+                {   
+                "codigoCliente": val.get("codigo_cliente"),
+                "nombreCliente": val.get("nombre_cliente"),
+                "ciudad": val.get("ciudad"),
+                "representante_de_ventas": val.get("codigo_empleado_rep_ventas")
+                }
+            )
+              return clientecity
+def getAllClienteRep():
+    allclientRep = []
+    for val in getAllData():
+            for val2 in em.empleados:
+               if val.get("codigo_empleado_rep_ventas") == val2.get("codigo_empleado") and val2.get("puesto") == "representante de venta":
+                allclientRep.append(
+                     {
+                        "nombre": val.get("nombre_cliente"),
+                        "nombre_rep": val2.get("nombre"),
+                        "apellido_rep": f"{val2.get('apellido1')}  {val2.get('apellido2')}"
+                     }
+                )
+    return allclientRep                       
+
+
+
 def menu():
     while True:
         print("""
 
-d8888b. d88888b d8888b.  .d88b.  d8888b. d888888b d88888b      d8888b. d88888b       .o88b. db      d888888b d88888b d8b   db d888888b d88888b .d8888. 
-88  `8D 88'     88  `8D .8P  Y8. 88  `8D `~~88~~' 88'          88  `8D 88'          d8P  Y8 88        `88'   88'     888o  88 `~~88~~' 88'     88'  YP 
-88oobY' 88ooooo 88oodD' 88    88 88oobY'    88    88ooooo      88   88 88ooooo      8P      88         88    88ooooo 88V8o 88    88    88ooooo `8bo.   
-88`8b   88~~~~~ 88~~~   88    88 88`8b      88    88~~~~~      88   88 88~~~~~      8b      88         88    88~~~~~ 88 V8o88    88    88~~~~~   `Y8b. 
-88 `88. 88.     88      `8b  d8' 88 `88.    88    88.          88  .8D 88.          Y8b  d8 88booo.   .88.   88.     88  V888    88    88.     db   8D 
-88   YD Y88888P 88       `Y88P'  88   YD    YP    Y88888P      Y8888D' Y88888P       `Y88P' Y88888P Y888888P Y88888P VP   V8P    YP    Y88888P `8888Y' 
+
+██████╗ ███████╗██████╗  ██████╗ ██████╗ ████████╗███████╗     ██████╗██╗     ██╗███████╗███╗   ██╗████████╗███████╗███████╗
+██╔══██╗██╔════╝██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝    ██╔════╝██║     ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝██╔════╝
+██████╔╝█████╗  ██████╔╝██║   ██║██████╔╝   ██║   █████╗      ██║     ██║     ██║█████╗  ██╔██╗ ██║   ██║   █████╗  ███████╗
+██╔══██╗██╔══╝  ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝      ██║     ██║     ██║██╔══╝  ██║╚██╗██║   ██║   ██╔══╝  ╚════██║
+██║  ██║███████╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗    ╚██████╗███████╗██║███████╗██║ ╚████║   ██║   ███████╗███████║
+╚═╝  ╚═╝╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝     ╚═════╝╚══════╝╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚══════╝
+                                                                                                                            
+ 
                                                                                                                                                        
                                                                                                                                                        
-                                                                     
+                0. menu anterior                                                    
                 1. obtener todos los clientes (codigo y nombre)
                 2. obtener un cliente por codigo (codigo y nombre)
                 3. obtener la informacion de un cliente segun su limite de credito y ciudad que pertenece (ejem: 3000.0,  San Francisco)
                 4. obtener todos los clientes de un pais, una region y una ciudad(pais, region, ciudad)
                 5. obtener el nombre de contacto de un cliente (codigo del cliente)
-                6. obtener segun el pais        
+                6. obtener segun el pais  
+                       
         """)
         opcion = int(input("\nSelecione una de las opciones: "))
         if(opcion == 1):
-                print(tabulate(getAllClientName(), headers="keys", tablefmt="github"))
+                print(tabulate(getAllClientName(), headers="keys", tablefmt="rounded_grid"))
         elif(opcion == 2):
                 codigoCliente = int(input("Ingrese el codigo del cliente: "))
-                print(tabulate(getOneClientCodigo(codigoCliente), headers="keys", tablefmt="github"))
+                print(tabulate(getOneClientCodigo(codigoCliente), headers="keys", tablefmt="rounded_grid"))
         elif(opcion == 3):
                 limite = float(input("Ingrese el limite de credito de los clientes que deseas vizualizar: "))
                 ciudad = input("Ingrese el nombre de la ciudad que deseas filtrar los clientes: ")
-                print(tabulate(getAllClientCreditCiudad(limite, ciudad), headers="keys", tablefmt="github"))
+                print(tabulate(getAllClientCreditCiudad(limite, ciudad), headers="keys", tablefmt="rounded_grid"))
         elif(opcion == 4):
                 pais = input('Ingresa el pais: ') 
                 region = input('Ingresa la region: ') or None
                 ciudad = input('Ingresa la ciudad: ') or None
-                print(tabulate(getAllClientPaisRegionCiudad(pais, region, ciudad), headers="keys", tablefmt="github"))
+                print(tabulate(getAllClientPaisRegionCiudad(pais, region, ciudad), headers="keys", tablefmt="rounded_grid"))
         elif(opcion == 5):
                 codigo = int(input('Ingrese el codigo del cliente: '))
                 print(tabulate(getNombreContacto(codigo), headers="keys", tablefmt="rounded_grid"))
         elif(opcion == 6):
                 pais = input('ingrese el pais: ')
                 print(tabulate(getClientesPais(pais), headers="keys", tablefmt="rounded_grid"))
+                
+
         elif(opcion == 0):
                 break

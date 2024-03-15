@@ -7,7 +7,9 @@ def getAllData():
     peticion = requests.get ("http://172.16.102.108:5501")
     data = peticion.json()
     return  data
-
+# Devuelve un listado con todos los productos que pertenecen a la gama Ornamentales 
+# y que tienen más de 100 unidades en stock. El listado deberá estar ordenado por su precio de venta, 
+# mostrando en primer lugar los de mayor precio.
 def getAllStockPriceGama(gama, stock):
     condicciones =[]
     for val in getAllData():
@@ -34,20 +36,19 @@ def menu():
     while True:
         os.system("clear")
         print("""
-          
-                            _                                  _            _        
-                           | |                                | |          | |       
-  _ __ ___ _ __   ___  _ __| |_ ___  ___   _ __  _ __ ___   __| |_   _  ___| |_ ___  
- | '__/ _ \ '_ \ / _ \| '__| __/ _ \/ __| | '_ \| '__/ _ \ / _` | | | |/ __| __/ _ \ 
- | | |  __/ |_) | (_) | |  | ||  __/\__ \ | |_) | | | (_) | (_| | |_| | (__| || (_) |
- |_|  \___| .__/ \___/|_|   \__\___||___/ | .__/|_|  \___/ \__,_|\__,_|\___|\__\___/ 
-          | |                             | |                                        
-          |_|                             |_|                                        
+
+██████╗ ███████╗██████╗  ██████╗ ██████╗ ████████╗███████╗███████╗    ██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗ ██████╗ 
+██╔══██╗██╔════╝██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔════╝    ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝██╔═══██╗
+██████╔╝█████╗  ██████╔╝██║   ██║██████╔╝   ██║   █████╗  ███████╗    ██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║   ██║   ██║
+██╔══██╗██╔══╝  ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ╚════██║    ██╔═══╝ ██╔══██╗██║   ██║██║  ██║██║   ██║██║        ██║   ██║   ██║
+██║  ██║███████╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗███████║    ██║     ██║  ██║╚██████╔╝██████╔╝╚██████╔╝╚██████╗   ██║   ╚██████╔╝
+╚═╝  ╚═╝╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚══════╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝    ╚═════╝ 
+                                                                                                                                          
+
                 1. obtener todos los productos de una categoria ordenando sus precios de venta, tambien que su cantidad de inventario sea su
                 0. regresar al menu principal    
-              
-              
-              
+  
+                      
             """ )
 
         opcion = int(input("\nSelecione una de las opciones: "))
@@ -55,7 +56,8 @@ def menu():
             gama = input ("Ingrese la gama que deseas filtar: ")
             stock = int(input ("Ingrese las unidades que deseas mostrar: "))
             print(tabulate(getAllStockPriceGama(gama, stock), headers="keys", tablefmt="github"))
-
+        elif(opcion == 0):
+            break
        # elif(opcion == 2) :
         # #   producto = {
            # "codigo_producto": input("Ingrese el codigo del producto: "),
@@ -68,8 +70,6 @@ def menu():
             #"precio_venta": float(input("Ingrse el precio de ventas: ")),
             #"precio_proveedor": float(input("Ingrse el precio del proveedor: "))
         #}    
-        elif(opcion == 0):
-            break 
 
 
 

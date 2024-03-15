@@ -1,11 +1,27 @@
-# devuelve un listado con el codigo del pedido
-# codigo de cliente fecha esperada y fecha de entrega
-# de los pedidos que no han sido entregados a tiempo
 import storage.pedido as pe
 from datetime import datetime
+import os
+import requests
+from tabulate import tabulate
 
-import storage.pedido as pe
-from datetime import datetime
+def getAllDataPedido():
+    #json-server storage/pedido.json -b 5503
+    peticion = requests.get("http://localhost:5503")
+    data = peticion.json()
+    return data 
+
+
+
+def getAllEstadoPedido():
+    estadoPedido = list()
+    for val in getAllDataPedido():
+        estadoPedido.append(
+            {
+               
+                "codigo": val.get("codigo_pedido"),
+                "estado": val.get("estado") 
+            }
+        )
 
 def getAllPedidosEntregadosAtrasadosDeTiempo():
     pedidosEntregado = []
@@ -82,8 +98,52 @@ def getAllListadoPedidosEntregadosMesEnero():
             start = datetime.strptime(date_1, "%d/%m/%Y")
             if start.month == "january":
 
-                pedidosentregados.append({
+                pedidosentregados.append(
+                    {
                     "estado": pedido.get("estado del pedido"),
                     "fecha_de_entrega": pedido.get("fecha_entrega")
-                })
-    return pedidosentregados            
+                    }
+                )
+    return pedidosentregados
+
+def menu():
+    while True:
+        os.system("clear")
+        print("""
+              
+              
+██████╗ ███████╗██████╗  ██████╗ ██████╗ ████████╗███████╗    ██████╗ ███████╗    ██████╗ ███████╗██████╗ ██╗██████╗  ██████╗ ███████╗
+██╔══██╗██╔════╝██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝    ██╔══██╗██╔════╝    ██╔══██╗██╔════╝██╔══██╗██║██╔══██╗██╔═══██╗██╔════╝
+██████╔╝█████╗  ██████╔╝██║   ██║██████╔╝   ██║   █████╗      ██║  ██║█████╗      ██████╔╝█████╗  ██║  ██║██║██║  ██║██║   ██║███████╗
+██╔══██╗██╔══╝  ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝      ██║  ██║██╔══╝      ██╔═══╝ ██╔══╝  ██║  ██║██║██║  ██║██║   ██║╚════██║
+██║  ██║███████╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗    ██████╔╝███████╗    ██║     ███████╗██████╔╝██║██████╔╝╚██████╔╝███████║
+╚═╝  ╚═╝╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝    ╚═════╝ ╚══════╝    ╚═╝     ╚══════╝╚═════╝ ╚═╝╚═════╝  ╚═════╝ ╚══════╝
+                                                                                                                                      
+          0. Regresar al menu principal
+          1. Obtener todos los estados de los pedidos.
+          2. Obtener la lista de los pedidos atrasados.
+          3. Obtener todos los pedidos que fueron entregados al menos 2 dias antes de lo esperado.
+          4. Mostrar todos los pedidos rechazados en el 2009.
+          5. Mostrar los pedidos entregados en el mes de enero sin importar el año.
+
+    """)
+        opcion = int(input("\nSeleccione una de las opciones: "))
+        if (opcion == 1):
+            print(tabulate(getAllEstadoPedido(), headers="keys", tablefmt="github"))
+            input("Precione una tecla para continuar.........")
+        elif (opcion == 2):
+            print(tabulate(getAllPedidosEntregadosAtrasadosDeTiempo(), headers="keys", tablefmt="github"))
+            input("Precione una tecla para continuar.........")
+        elif (opcion == 3):
+            print(tabulate(getAllPedidosEntregadosDosDiasAntes(), headers="keys", tablefmt="github"))
+            input("Precione una tecla para continuar.........")
+        elif (opcion == 4):
+            print(tabulate(getAllListadoDePedidosRechazados2009(), headers="keys", tablefmt="github"))
+            input("Precione una tecla para continuar.........")
+        elif (opcion == 5):
+            print(tabulate(getAllListadoPedidosEntregadosMesEnero(), headers="keys", tablefmt="github"))
+            input("Precione una tecla para continuar.........")
+        elif (opcion == 0):
+            break
+        else:
+            print("Opcion no valida")

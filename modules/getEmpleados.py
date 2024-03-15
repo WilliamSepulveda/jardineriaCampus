@@ -1,8 +1,10 @@
 # devuelve un listado con el nombre, apellidos, y email 
 # de los empleados cuyo  jefe tiene un codigo de jefe igual  a 7 
 
+from jardineriaCampus.modules.getClients import getAllDataEmpleado
 import storage.empleado as em
 from tabulate import tabulate
+import os
 
 def getAllNombreApellidoemail(codigo):
     NombreApellidoemail = []
@@ -36,7 +38,6 @@ def getAllNombrePuestoApellidoEmailJefe(codigo):
     return NombrePuestoApellidoEmailJefe
     
 #Devuelve un listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas
-import storage.empleado as em
 def getAllNombreApellidoPuestos():
     NombreApellidoPuestos = []
     for val in em.empleados:
@@ -50,7 +51,7 @@ def getAllNombreApellidoPuestos():
 
 def getAllNombresApellidosPuestosRepresentantesDeVentas():
     nombreApellidosPuestos = list()
-    for val in em.empleados:
+    for val in getAllDataEmpleado():
         if(val.get("puesto") != 'representante de ventas: '):
             {
                 "nombre": val.get("nombre"),
@@ -61,35 +62,39 @@ def getAllNombresApellidosPuestosRepresentantesDeVentas():
 
 
 def menu():
-    print(""" 
+    while True:
+        os.system("clear")
+        print(""" 
 
- ___ ___    ___  ____   __ __        ___  ___ ___  ____  _        ___   ____  ___     ___   _____    
-|   |   |  /  _]|    \ |  |  |      /  _]|   |   ||    \| |      /  _] /    ||   \   /   \ / ___/    
-| _   _ | /  [_ |  _  ||  |  |     /  [_ | _   _ ||  o  ) |     /  [_ |  o  ||    \ |     (   \_     
-|  \_/  ||    _]|  |  ||  |  |    |    _]|  \_/  ||   _/| |___ |    _]|     ||  D  ||  O  |\__  |    
-|   |   ||   [_ |  |  ||  :  |    |   [_ |   |   ||  |  |     ||   [_ |  _  ||     ||     |/  \ |    
-|   |   ||     ||  |  ||     |    |     ||   |   ||  |  |     ||     ||  |  ||     ||     |\    |    
-|___|___||_____||__|__| \__,_|    |_____||___|___||__|  |_____||_____||__|__||_____| \___/  \___|    
+
+███╗   ███╗███████╗███╗   ██╗██╗   ██╗    ███████╗███╗   ███╗██████╗ ██╗     ███████╗ █████╗ ██████╗  ██████╗ ███████╗
+████╗ ████║██╔════╝████╗  ██║██║   ██║    ██╔════╝████╗ ████║██╔══██╗██║     ██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔════╝
+██╔████╔██║█████╗  ██╔██╗ ██║██║   ██║    █████╗  ██╔████╔██║██████╔╝██║     █████╗  ███████║██║  ██║██║   ██║███████╗
+██║╚██╔╝██║██╔══╝  ██║╚██╗██║██║   ██║    ██╔══╝  ██║╚██╔╝██║██╔═══╝ ██║     ██╔══╝  ██╔══██║██║  ██║██║   ██║╚════██║
+██║ ╚═╝ ██║███████╗██║ ╚████║╚██████╔╝    ███████╗██║ ╚═╝ ██║██║     ███████╗███████╗██║  ██║██████╔╝╚██████╔╝███████║
+╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝     ╚══════╝╚═╝     ╚═╝╚═╝     ╚══════╝╚══════╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚══════╝
+                                                                                                                      
+ 
                                                                                                                                                                        
         1. Obtener el nombre, apellidos y email de los empleados con el mismo codigo del jefe.
         2. Obtener la informacion de su jefe.
         3. Obtener el listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas.
         0. devolver 
-""")
-    opcion = int(input("\nseleccione una de las opciones: "))
+    """)
+        opcion = int(input("\nseleccione una de las opciones: "))
 
-    if(opcion ==1):
-            codigo = int(input("ingrese el codigo del jefe: "))
-            print(tabulate(getAllNombreApellidoemail(codigo), headers="keys", tablefmt='rounded_grid'))
-
-    elif(opcion ==2):
-            codigo = int(input("ingrese el codigo del jefe para obtener la informacion: "))
-            print(tabulate(getAllNombrePuestoApellidoEmailJefe(codigo), headers="keys", tablefmt='rounded_grid'))    
-
-    elif (opcion == 3):
-            codigo = int(input("ingrese codigo"))
-            print(tabulate(getAllNombresApellidosPuestosRepresentantesDeVentas(), headers="keys", tablefmt="github"))
-    elif (opcion == 0):
-         pass
-    else:   
-        print("opcion no valida")
+        if(opcion ==1):
+                    codigo = int(input("ingrese el codigo del jefe: "))
+                    print(tabulate(getAllNombreApellidoemail(codigo), headers="keys", tablefmt='rounded_grid'))
+                    input("Precione una tecla para continuar.........")
+        elif(opcion ==2):
+                    codigo = int(input("ingrese el codigo del jefe para obtener la informacion: "))
+                    print(tabulate(getAllNombrePuestoApellidoEmailJefe(codigo), headers="keys", tablefmt='rounded_grid'))    
+                    input("Precione una tecla para continuar.........")
+        elif (opcion == 3):
+                    print(tabulate(getAllNombresApellidosPuestosRepresentantesDeVentas(), headers="keys", tablefmt="github"))
+                    input("Precione una tecla para continuar.........")
+        elif (opcion == 0):
+            break
+        else:   
+            print("opcion no valida")
