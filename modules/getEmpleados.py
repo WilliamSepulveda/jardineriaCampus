@@ -1,14 +1,12 @@
 # devuelve un listado con el nombre, apellidos, y email 
 # de los empleados cuyo  jefe tiene un codigo de jefe igual  a 7 
-
-from jardineriaCampus.modules.getClients import getAllDataEmpleado
-import storage.empleado as em
+from modules.crudEmpleado import getAllDataEmpleado as em 
 from tabulate import tabulate
 import os
 
 def getAllNombreApellidoemail(codigo):
     NombreApellidoemail = []
-    for val in em.empleados:
+    for val in getAllDataEmpleado:
         if(val.get("codigo_jefe") == codigo):
             NombreApellidoemail.append(
                 {
@@ -51,7 +49,7 @@ def getAllNombreApellidoPuestos():
 
 def getAllNombresApellidosPuestosRepresentantesDeVentas():
     nombreApellidosPuestos = list()
-    for val in getAllDataEmpleado():
+    for val in em.empleados:
         if(val.get("puesto") != 'representante de ventas: '):
             {
                 "nombre": val.get("nombre"),
