@@ -2,6 +2,7 @@ import os
 import json 
 import requests
 from tabulate import tabulate
+import modules.Validaciones as vali
 
 def menu():
     while True:
@@ -20,13 +21,16 @@ def menu():
               
             """)
         opcion = int(input("\nSeleccione una de las opciones: "))
-        if (opcion == 1):
-            print(tabulate(postEmpleados(), headers="keys", tablefmt="rounded_grid"))
-            input("precione una tecla para comtinuar....")
-        elif(opcion == 0):
-            break
-        else:
-            print("opcion no valida")
+        if(vali.ValidacionOpciones(opcion) is not None):
+            opcion = int(opcion)
+            if(opcion >= 0 and opcion <= 1):
+                if (opcion == 1):           
+                    print(tabulate(postClientes(), headers="keys", tablefmt="rounded_grid"))
+                input("precione una tecla para comtinuar....")
+            elif(opcion == 0):
+                break
+            else:
+                print("opcion no valida")
 
 def getAllCliente():
  #json-server storage/cliente.json -b 5507
@@ -44,7 +48,7 @@ def nuevoCodigoCliente():
         return 1
     
 
-def postEmpleados():
+def postClientes():
     cliente = {
         "codigo_cliente": nuevoCodigoCliente(),
         "nombre_cliente": input("Ingrese el nombre del cliente: "),
