@@ -1,6 +1,7 @@
 from tabulate import tabulate
 import os 
 import requests
+import modules.crudProductos as pro
 
 def getAllData():
     #json-server storage/producto.json -b 5501
@@ -9,15 +10,15 @@ def getAllData():
     return  data
 
 def getproductCodigo(codigo):
-    for val in getAllData():
+    for val in pro():
         if(val.get('codigo_producto')== codigo):
             return[val]
 # Devuelve un listado con todos los productos que pertenecen a la gama Ornamentales 
 # y que tienen más de 100 unidades en stock. El listado deberá estar ordenado por su precio de venta, 
 # mostrando en primer lugar los de mayor precio.
 def getAllStockPriceGama(gama, stock):
-    condicciones =[]
-    for val in getAllData():
+    condicciones = list()
+    for val in pro():
         if(val.get("gama") == gama and val.get("cantidad_en_stock") >= stock):
             condicciones.append(val)
     def price(val):

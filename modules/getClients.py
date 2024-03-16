@@ -1,9 +1,8 @@
 from tabulate import tabulate
 from modules.getproducto import getAllData
-import storage.cliente as cli
+from modules.crudClientes import getAllCliente as cli
+from modules.crudEmpleado import getAllDataEmpleado as em
 import requests
-import storage.empleado as em
-
 
 def getAllDataEmpleado():
     peticion = requests.get("http://172.16.100.136:5003")

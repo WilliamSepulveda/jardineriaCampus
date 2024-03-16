@@ -1,5 +1,5 @@
 # Devuelve un listado con el código de oficina y la ciudad donde hay oficinas.
-import storage.oficina as of 
+import modules.crudOficina as of 
 
 def getAllCodigoCiudad():
     codigoCiudad = []

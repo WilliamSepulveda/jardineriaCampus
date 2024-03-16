@@ -1,9 +1,9 @@
 import os
-import json 
+import json
 import requests
 from tabulate import tabulate
-from jardineriaCampus.modules.getpedido import getAllDataPedido
 import modules.Validaciones as vali
+import modules.getpedido as pe
 
 def menu():
     while True:
@@ -51,7 +51,7 @@ def getAllDataPagos():
 
 def nuevoCodigoPedido():
     codigodelCliente = list()
-    for val in getAllDataPedido():
+    for val in pe():
         codigodelCliente.append(val.get("codigo_empleado"))
         if codigodelCliente:
             return max(codigodelCliente) +  1

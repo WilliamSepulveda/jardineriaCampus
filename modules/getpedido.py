@@ -1,8 +1,9 @@
-import storage.pedido as pe
+import modules.crudPedidos as pe
 from datetime import datetime
 import os
 import requests
 from tabulate import tabulate
+
 
 def getAllDataPedido():
     #json-server storage/pedido.json -b 5503
