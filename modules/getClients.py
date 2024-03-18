@@ -1,17 +1,17 @@
 from tabulate import tabulate
 from modules.getproducto import getAllData
-from modules.crudClientes import getAllCliente as cli
-from modules.crudEmpleado import getAllDataEmpleado as em
+from modules.crudClientes import getAllCliente as getAllCliente
+from modules.crudEmpleado import getAllDataEmpleado
 import requests
 
-def getAllDataEmpleado():
+def getAllCliente():
     peticion = requests.get("http://172.16.100.136:5003")
     data = peticion.json()
     return data
 
 def getAllClientName():
     clienteName = list()
-    for val in cli.clientes:       
+    for val in   getAllCliente():       
         codigoName = dict({            
         "codigo": val.get('codigo_cliente'),
         "nombre": val.get('nombre_cliente')
@@ -20,7 +20,7 @@ def getAllClientName():
     return clienteName
 
 def getOneClientCodigo(codigo):
-    for val in cli.clientes:
+    for val in  getAllCliente():
         if(val.get('codigo_cliente') == codigo):
             return[{
                 "codigo": val.get('codigo_cliente'),
@@ -29,7 +29,7 @@ def getOneClientCodigo(codigo):
 
 def getAllClientCreditCiudad(limiteCredit,ciudad):
     clienteCredit =list()
-    for val in cli.clientes:
+    for val in   getAllCliente():
         if(val.get('limite_credito') >= limiteCredit and val.get('ciudad') == ciudad):
             clienteCredit.append({
                 "codigo": val.get("codigo_cliente"),
@@ -46,21 +46,21 @@ def getAllClientCreditCiudad(limiteCredit,ciudad):
     return clienteCredit
         
 # obtener todos los clientes de un pais, una region y una ciudad(pais, region, ciudad)
-def getAllClientPaisRegionCiudad(pais, region = None, ciudad = None):
+def getAllClientPaisRegionCiudad(pais,region= None,ciudad= None):
     clientZone = list()
-    for val in cli.clientes:
+    for val in   getAllCliente():
         if(val.get('pais') == pais):
 
-            if(pais is None or val.get('region' == pais)):
+            if(pais is None or val.get('region' == region)):
                 clientZone.append(val)
-            elif(val.get('pais' == None)):
+            elif val.get('ciudad' == ciudad) or val.get('ciudad' == None):
 
-              clientZone.append(val)
+                clientZone.append(val)
     return clientZone 
 
 def getClientCodePostal(pais, region=None, ciudad=None):
     clientZone = list()
-    for val in cli.clientes():
+    for val in   getAllCliente():
         if (val.get('pais') == pais):
             if((region is None or val.get('region') == region)):
                 if((ciudad is None or val.get('ciudad') == ciudad)):
@@ -81,7 +81,7 @@ def getClientCodePostal(pais, region=None, ciudad=None):
 def getAllClientcodigo_empleado_rep_ventas(codigo_empleado):
         
         clientCodigo = list()
-        for val in cli.clientes:
+        for val in   getAllCliente():
             if(val.get('codigo_empleado' == codigo_empleado)):
                 return{
                     "codigo_empleado_rep_ventas":val.get('codigo_empleado'),
@@ -93,36 +93,36 @@ def getAllClientcodigo_empleado_rep_ventas(codigo_empleado):
 def getNombreContacto(codigo):
 
     contacClient=[]
-    for val in cli.clientes:
+    for val in   getAllCliente():
         if(val.get('codigo_cliente') == codigo):
 
-           contacClient.append({
+            contacClient.append({
             "codigo_cliente":{val.get('codigo_cliente')},
             "nombre_contacto":{val.get('nombre_contacto')},
             "apellido_contacto":{val.get('apellido_contacto')}
-           })
+            })
 
     return contacClient
 
 
 def getClientesPais(pais):
     ClientesPais=[]
-    for val in cli.clientes:
-       if(val.get("pais") == pais):
-           ClientesPais.append(
-               {
-                   "codigo_cliente":{val.get("codigo_cliente")},
-                   "nombre_cliente":{val.get("nombre_cliente")},
-                   "pais": {val.get("pais")}
-               }
-           )
+    for val in   getAllCliente():
+        if(val.get("pais") == pais):
+            ClientesPais.append(
+                {
+                "codigo_cliente":{val.get("codigo_cliente")},
+                "nombre_cliente":{val.get("nombre_cliente")},
+                "pais": {val.get("pais")}
+                }
+        )
     return ClientesPais
 
 def getCityEmploy0(ciudad):
-     clientecity = []
-     for val in getAllData():
-          if(val.get("ciudad")) ==  ciudad and (val.get("codigo_empleado_rep_ventas") ==11) or (val.get("codigo_empleado_rep_ventas") == 30):
-              clientecity.append(
+    clientecity = []
+    for val in getAllData():
+        if(val.get("ciudad")) ==  ciudad and (val.get("codigo_empleado_rep_ventas") ==11) or (val.get("codigo_empleado_rep_ventas") == 30):
+            clientecity.append(
                 {   
                 "codigoCliente": val.get("codigo_cliente"),
                 "nombreCliente": val.get("nombre_cliente"),
@@ -130,18 +130,18 @@ def getCityEmploy0(ciudad):
                 "representante_de_ventas": val.get("codigo_empleado_rep_ventas")
                 }
             )
-              return clientecity
-def getAllClienteRep():
+            return clientecity
+def  getAllClienteRep():
     allclientRep = []
     for val in getAllData():
-            for val2 in em.empleados:
-               if val.get("codigo_empleado_rep_ventas") == val2.get("codigo_empleado") and val2.get("puesto") == "representante de venta":
-                allclientRep.append(
-                     {
+            for val2 in  getAllCliente():
+                if val.get("codigo_empleado_rep_ventas") == val2.get("codigo_empleado") and val2.get("puesto") == "representante de venta":
+                    allclientRep.append(
+                    {
                         "nombre": val.get("nombre_cliente"),
                         "nombre_rep": val2.get("nombre"),
                         "apellido_rep": f"{val2.get('apellido1')}  {val2.get('apellido2')}"
-                     }
+                    }
                 )
     return allclientRep                       
 
@@ -159,9 +159,7 @@ def menu():
 ██║  ██║███████╗██║     ╚██████╔╝██║  ██║   ██║   ███████╗    ╚██████╗███████╗██║███████╗██║ ╚████║   ██║   ███████╗███████║
 ╚═╝  ╚═╝╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝     ╚═════╝╚══════╝╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚══════╝
                                                                                                                             
- 
-                                                                                                                                                       
-                                                                                                                                                       
+                                                                                                                                                
                 0. menu anterior                                                    
                 1. obtener todos los clientes (codigo y nombre)
                 2. obtener un cliente por codigo (codigo y nombre)
@@ -169,7 +167,6 @@ def menu():
                 4. obtener todos los clientes de un pais, una region y una ciudad(pais, region, ciudad)
                 5. obtener el nombre de contacto de un cliente (codigo del cliente)
                 6. obtener segun el pais  
-                       
         """)
         opcion = int(input("\nSelecione una de las opciones: "))
         if(opcion == 1):
@@ -185,7 +182,7 @@ def menu():
                 pais = input('Ingresa el pais: ') 
                 region = input('Ingresa la region: ') or None
                 ciudad = input('Ingresa la ciudad: ') or None
-                print(tabulate(getAllClientPaisRegionCiudad(pais, region, ciudad), headers="keys", tablefmt="rounded_grid"))
+                print(tabulate(getAllClientPaisRegionCiudad(pais = pais, region = None, ciudad = None ), headers="keys", tablefmt="rounded_grid"))
         elif(opcion == 5):
                 codigo = int(input('Ingrese el codigo del cliente: '))
                 print(tabulate(getNombreContacto(codigo), headers="keys", tablefmt="rounded_grid"))
@@ -196,3 +193,4 @@ def menu():
 
         elif(opcion == 0):
                 break
+        

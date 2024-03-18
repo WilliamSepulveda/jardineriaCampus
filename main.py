@@ -40,11 +40,8 @@ def menuProducto():
     ██║  ██║█████╗      ██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║   ██║   ██║███████╗    
     ██║  ██║██╔══╝      ██╔═══╝ ██╔══██╗██║   ██║██║  ██║██║   ██║██║        ██║   ██║   ██║╚════██║    
     ██████╔╝███████╗    ██║     ██║  ██║╚██████╔╝██████╔╝╚██████╔╝╚██████╗   ██║   ╚██████╔╝███████║    
-    ╚═════╝ ╚══════╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝    ╚═════╝ ╚══════╝    
-                                                                                                        
-                                 
-            /_/                                                   
-                                             
+    ╚═════╝ ╚══════╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝    ╚═════╝ ╚══════╝                                    
+            /_/                                                                                               
             1. Reportes de los productos
             2. Guardar, Actualizar y Eliminar productos
             0. Regresar al menu principal
@@ -56,13 +53,13 @@ def menuProducto():
         if(opcion == 2):
                 CRUDproducto.menu()
         elif(opcion == 0):
-             break
+            break
 if(__name__ =="__main__"):
 # https://patorjk.com/software/taag/#p=display&h=2&v=2&f=Slant&t=Menu%20Principal    
-     while True:
-          os.system("clear")
-          print("""
- 
+    while True:
+        os.system("clear")
+        print("""
+
 ███╗   ███╗███████╗███╗   ██╗██╗   ██╗    ██████╗ ██████╗ ██╗███╗   ██╗ ██████╗██╗██████╗  █████╗ ██╗     
 ████╗ ████║██╔════╝████╗  ██║██║   ██║    ██╔══██╗██╔══██╗██║████╗  ██║██╔════╝██║██╔══██╗██╔══██╗██║     
 ██╔████╔██║█████╗  ██╔██╗ ██║██║   ██║    ██████╔╝██████╔╝██║██╔██╗ ██║██║     ██║██████╔╝███████║██║     
@@ -77,50 +74,24 @@ if(__name__ =="__main__"):
                         0. Salir
 """)
 
-opcion = int(input("\nSelecione una de las opciones: "))
-if re.match(r'^[0-5]$', opcion):
-    opcion = int(opcion)
-    if 0 < opcion < 6:
-        if(opcion == 1):
-            cliente.menu()
-        elif(opcion == 2):
-            oficina.menu()
-        elif(opcion == 3):
-            empleado.menu()
-        elif(opcion == 4):
-            pedidos.menu()
-        elif(opcion == 5):
-            menuProducto()
-        elif(opcion == 0):
-            break
-
-
-
-
-
-
-
-
-
-
-    opcion = input("\nSeleccione una de las opciones: ")
-    if re.match(r'^[0-5]$', opcion):
-        opcion = int(opcion)
-        if 0 < opcion < 6:
-            if opcion == 1:
-                cliente.menu()
-            elif opcion == 2:
-                oficina.menu()
-            elif opcion == 3:
-                empleado.menu()
-            elif opcion == 4:
-                pedidos.menu()
-            elif opcion == 5:
-                menuProducto()
-        elif opcion == 0:
-            break
-    else:
-        print("Opción inválida. Por favor, seleccione un número entre 0 y 5.")
+        opcion = input("\nSeleccione una de las opciones: ")
+        if re.match(r'^[0-5]$', opcion):
+                opcion = int(opcion)
+                if 0 < opcion < 6:
+                    if opcion == 1:
+                        cliente.menu()
+                    elif opcion == 2:
+                        oficina.menu()
+                    elif opcion == 3:
+                        empleado.menu()
+                    elif opcion == 4:
+                        pedidos.menu()
+                    elif opcion == 5:
+                        menuProducto()
+                    elif opcion == 0:
+                        break
+                else:
+                    print("Opción inválida. Por favor, seleccione un número entre 0 y 5.")
 
 
 
