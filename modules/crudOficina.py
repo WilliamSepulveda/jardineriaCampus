@@ -46,7 +46,7 @@ def menu():
 
 def getAllDataOficina():
     #json-server storage/oficina.json -b 5505
-    peticion = request.get("http://localhost:5505")
+    peticion = request.get("http://localhost:5505/oficinas")
     data = peticion.json()
     return data 
 

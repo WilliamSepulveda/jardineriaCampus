@@ -5,7 +5,7 @@ from modules.crudEmpleado import getAllDataEmpleado
 import requests
 
 def getAllCliente():
-    peticion = requests.get("http://172.16.100.136:5003")
+    peticion = requests.get("http://localhost:5501/cliente")
     data = peticion.json()
     return data
 
@@ -50,12 +50,19 @@ def getAllClientPaisRegionCiudad(pais,region= None,ciudad= None):
     clientZone = list()
     for val in   getAllCliente():
         if(val.get('pais') == pais):
-
-            if(pais is None or val.get('region' == region)):
-                clientZone.append(val)
-            elif val.get('ciudad' == ciudad) or val.get('ciudad' == None):
-
-                clientZone.append(val)
+            if((region is None or val.get('region') == region)):
+                if((ciudad is None or val.get('ciudad') == ciudad)):
+                    clientZone.append({
+                "codigo": val.get('codigo_cliente'),
+                "Responsable": val.get('nombre_cliente'),
+                "Director": f"{val.get('nombre_contacto')} {val.get('apellido_contacto')}",
+                "Telefono": val.get('telefono'),
+                "Fax": val.get('fax'),
+                "Direcciones": f"{val.get('linea_direccion1')} {val.get('linea_direccion2')}",
+                "Origen": f"{val.get('pais')} {val.get('region')} {val.get('ciudad')} {val.get('codigo_postal')}",
+                "Codigo del asesor": val.get('codigo_empleado_rep_ventas'),
+                "Credito": val.get('limite_credito')    
+                })
     return clientZone 
 
 def getClientCodePostal(pais, region=None, ciudad=None):

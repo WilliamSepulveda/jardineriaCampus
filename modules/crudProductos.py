@@ -43,7 +43,7 @@ def menu():
 
 def getAllDataPagos():
     #json-server storage/pago.json -b 5504
-    peticion = requests.get("http://localhost:5504")
+    peticion = requests.get("http://localhost:5504/productos")
     data = peticion.json()
     return data 
 

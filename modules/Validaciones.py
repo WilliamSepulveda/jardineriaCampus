@@ -19,3 +19,7 @@ def validacionDimension(dimensiones):
 def validacionNumerica(numero):
     val = re.match(r'^\s*\d+(\.\d+)?\s*$', numero)
     return val
+
+def validacionesOpciones(opcion):
+    val =re.match(r'[0-9]+$',opcion)
+    return val 

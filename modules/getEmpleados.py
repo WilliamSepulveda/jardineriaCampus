@@ -3,8 +3,15 @@ from modules.crudEmpleado import getAllDataEmpleado as em
 from tabulate import tabulate
 import os
 import modules.Validaciones as vali 
+import requests
 # devuelve un listado con el nombre, apellidos, y email 
 # de los empleados cuyo  jefe tiene un codigo de jefe igual  a 7
+
+def getAllCliente():
+    peticion = requests.get("http://localhost:5503/empleados")
+    data = peticion.json()
+    return data
+
 def getAllNombreApellidoemail(codigo):
     NombreApellidoemail = []
     for val in em():
