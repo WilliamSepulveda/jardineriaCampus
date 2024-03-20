@@ -2,7 +2,7 @@ import os
 from tabulate import tabulate
 import modules.Validaciones as vali
 from modules.crudPagos import getAllDataPagos as getAllDataPagos
-from modules.crudEmpleado import getAllDataEmpleado as em
+from modules.crudEmpleado import getAllEmpleado as em
 from modules.crudClientes import getAllCliente as cli
 import requests
 

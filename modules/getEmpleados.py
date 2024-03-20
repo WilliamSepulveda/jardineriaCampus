@@ -1,5 +1,5 @@
 
-from modules.crudEmpleado import getAllDataEmpleado as em 
+from modules.crudEmpleado import getAllEmpleado 
 from tabulate import tabulate
 import os
 import modules.Validaciones as vali 
@@ -7,15 +7,15 @@ import requests
 # devuelve un listado con el nombre, apellidos, y email 
 # de los empleados cuyo  jefe tiene un codigo de jefe igual  a 7
 
-def getAllCliente():
+def getAllEmpleado():
     peticion = requests.get("http://localhost:5502/empleados")
     data = peticion.json()
     return data
 
 def getAllNombreApellidoemail(codigo):
     NombreApellidoemail = []
-    for val in em():
-        if(val.get("codigo_jefe") == codigo):
+    for val in getAllEmpleado():
+        if(val.get("codigo_jefe") == codigo) and  val.get("codigoJefe") == None:
             NombreApellidoemail.append(
                 {
                     "nombre": val.get("nombre"),
@@ -30,7 +30,7 @@ def getAllNombreApellidoemail(codigo):
 
 def getAllNombrePuestoApellidoEmailJefe(codigo):
     NombrePuestoApellidoEmailJefe = list()
-    for val in em():
+    for val in getAllEmpleado():
         if(val.get("codigo_empleado")) == codigo:
             NombrePuestoApellidoEmailJefe.append(
                 {                  
@@ -46,7 +46,7 @@ def getAllNombrePuestoApellidoEmailJefe(codigo):
 #Devuelve un listado con el nombre, apellidos y puesto de aquellos empleados que no sean representantes de ventas
 def getAllJefeNombreApellidoEmailJefe(codigo):
     JefeNombreApellidoEmailJefe = list()
-    for val in em():
+    for val in getAllEmpleado():
          if((val.get("codigo_empleado") == codigo)):
               JefeNombreApellidoEmailJefe.append(
                    {
@@ -60,14 +60,16 @@ def getAllJefeNombreApellidoEmailJefe(codigo):
     return JefeNombreApellidoEmailJefe 
 
 def getAllNombresApellidosPuestosRepresentantesDeVentas():
-    nombreApellidosPuestos = list()
-    for val in em.empleados:
+    nombreApellidosPuestos = []
+    for val in getAllEmpleado():
         if(val.get("puesto") != 'representante de ventas: '):
+            nombreApellidosPuestos.append(
             {
                 "nombre": val.get("nombre"),
                 "apellidos": f'{val.get("apellido_1"),{val.get("apellido_2")}}',
                 "puesto": val.get("puesto")
             }
+        )
     return nombreApellidosPuestos
 
 
@@ -90,7 +92,7 @@ def menu():
         0. devolver 
     """)
 
-        opcion = int(input("\nseleccione una de las opciones: "))
+        opcion = input("\nseleccione una de las opciones: ")
         if(vali.validacionOpciones(opcion) is not None):
             opcion = int(opcion)
             if(opcion >= 0 and opcion <= 3):

@@ -8,7 +8,7 @@ import re
 
 
 def getAllDataPedido():
-    #json-server storage/pedido.json -b 5503
+    #json-server ./storage/pedido.json -p 5506
     peticion = requests.get("http://localhost:5506/pedidos")
     data = peticion.json()
     return data 
@@ -81,43 +81,39 @@ def getAllPedidosEntregadosDosDiasAntes():
 
 
 
-# devuelve un listado de todos los pedidos que fueron rechazados en 2009
-
 def getAllListadoDePedidosRechazados2009():
-    pedidosrechazados = []
-    peticion = requests.get("http://localhost:5506/pedidos?estado=Entregado")
+    pedidos_rechazados = []
+    peticion = requests.get("http://localhost:5506/pedidos?estado=Rechazado")
     data = peticion.json()
     for pedido in data:                   
-        if pedido.get("estado") == "Rechazado" and pedido.get("fechaPedido") == "2009":            
-          
-                pedidosrechazados.append({
-                    "estado": pedido.get("estado del pedido"),
-                    "códigoPedido": pedido.get("codigoPedido"),
-                    "códigoCliente": pedido.get("codigoCliente"),
-                    "fechaEsperada": pedido.get("fechaEsperada")
-                }) 
-    return pedidosrechazados
+        fecha_pedido = pedido.get("fechaPedido")
+        if pedido.get("estado") == "Rechazado" and fecha_pedido.startswith("2009"):            
+            pedidos_rechazados.append({
+                "estado": pedido.get("estado"),
+                "códigoPedido": pedido.get("codigoPedido"),
+                "códigoCliente": pedido.get("codigoCliente"),
+                "fechaEsperada": pedido.get("fechaEsperada")
+            }) 
+    return pedidos_rechazados
             
 # devuelve un listado de todos los pedidos que han sido entregados en le mes de enero de cualquier año         
 
 
 def getAllListadoPedidosEntregadosMesEnero():
-    pedidosentregados = []
+    pedidos_entregados_enero = []
     peticion = requests.get("http://localhost:5506/pedidos?estado=Entregado")
     data = peticion.json()
-    for pedido in data:
-        if pedido.get("estado") == "Entregado" and pedido.get("fechaEntrega") is None:
-            pedido["fecha_entrega"] = pedido.get("fechaEsperada")
-        if pedido.get("estado") == "Entregado":
-            date_1 = "/".join(pedido.get("fechaEntrega").split("-")[::-1])
-            fecha_entrega = datetime.strptime(date_1, "%d/%m/%Y")
-            if fecha_entrega.month == 1:
-                pedidosentregados.append({
-                    "Codigo de pedido": pedido.get("codigoPedido"),
-                    "Codigo de cliente": pedido.get("codigoCliente"),
-                    "Fecha de entrega": pedido.get("fechaEntrega")                  
-                })
-    return pedidosentregados
+    for pedido in data:                   
+        fecha_entrega = pedido.get("fechaEntrega")
+        if fecha_entrega is not None:
+            date_1 = "/".join(fecha_entrega.split("-")[::-1])
+            if date_1.startswith("01"):
+                pedidos_entregados_enero.append({
+                    "Código del pedido": pedido.get("codigoPedido"),
+                    "Código del cliente": pedido.get("codigoCliente"),
+                    "Fecha de entrega": date_1
+                }) 
+    return pedidos_entregados_enero
 
 def menu():
     while True:
@@ -145,22 +141,22 @@ def menu():
             opcion = int(opcion)
             if(opcion >= 0 and opcion <= 5):           
                 if (opcion == 1):
-                    input(tabulate(getAllEstadoPedido(), headers="keys", tablefmt="github"))
-                    input("Precione una tecla para continuar.........")
+                    print(tabulate(getAllEstadoPedido(), headers="keys", tablefmt="github"))
+                    input("Preccione una tecla para continuar.........")
                 elif (opcion == 2):
                     print(tabulate(getAllPedidosEntregadosAtrasadosDeTiempo(), headers="keys", tablefmt="github"))
                     input("Precione una tecla para continuar.........")
                 elif (opcion == 3):
                     print(tabulate(getAllPedidosEntregadosDosDiasAntes(), headers="keys", tablefmt="github"))
-                    input("Precione una tecla para continuar.........")
+                    input("Preccione una tecla para continuar.........")
                 elif (opcion == 4):
-                    input(tabulate(getAllListadoDePedidosRechazados2009(), headers="keys", tablefmt="github"))
-                    input("Precione una tecla para continuar.........")
+                
+                    print(tabulate(getAllListadoDePedidosRechazados2009(), headers="keys", tablefmt="github"))
+                    input("Preccione una tecla para continuar.........")
                 elif (opcion == 5):
                     print(tabulate(getAllListadoPedidosEntregadosMesEnero(), headers="keys", tablefmt="github"))
-                    input("Precione una tecla para continuar.........")
+                    input("Preccione una tecla para continuar.........")
                 elif (opcion == 0):
                     break
                 else:
                     print("Opcion no valida")
-            print("seleccione una tecla para continuar.....")

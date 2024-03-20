@@ -1,29 +1,24 @@
 from tabulate import tabulate
 import os 
 import requests
-import modules.crudProductos as pro
+import re
+
 
 def getAllData():
-    #json-server storage/producto.json -b 5501
+    #json-server ./storage/producto.json -p 5507
     peticion = requests.get ("http://localhost:5507/productos")
     data = peticion.json()
     return  data
 
 def getproductCodigo(codigo):
-    for val in pro():
-        if(val.get('codigo_producto')== codigo):
-            return[val]
+    peticion = requests.get(f"http://localhost:5507/productos{codigo}")
+    return [peticion.json()] if peticion.ok else []
 # Devuelve un listado con todos los productos que pertenecen a la gama Ornamentales 
 # y que tienen más de 100 unidades en stock. El listado deberá estar ordenado por su precio de venta, 
 # mostrando en primer lugar los de mayor precio.
 def getAllStockPriceGama(gama, stock):
-    condicciones = list()
-    for val in pro():
-        if(val.get("gama") == gama and val.get("cantidad_en_stock") >= stock):
-            condicciones.append(val)
-    def price(val):
-        return val.get("precio_venta" )
-    condicciones. sort(key=price, reverse=True)
+    peticion = requests.get(f"http://localhost:5507/productos?gama={gama}&cantidadEnStock_gte={stock}&_sort=-precio_venta")
+    condicciones = peticion.json()
     for i, val in enumerate (condicciones):
         condicciones [i] = {
             "codigo": val.get ("codigo_producto"),
@@ -55,15 +50,20 @@ def menu():
                 0. regresar al menu principal    
   
                       
-            """ )
+""" )
 
-        opcion = int(input("\nSelecione una de las opciones: "))
-        if(opcion == 1) :
-            gama = input ("Ingrese la gama que deseas filtar: ")
-            stock = int(input ("Ingrese las unidades que deseas mostrar: "))
-            print(tabulate(getAllStockPriceGama(gama, stock), headers="keys", tablefmt="github"))
-        elif(opcion == 0):
-            break
+        opcion = input("\nSelecione una de las opciones: ")
+        if(re.match(r'[0-9]+$', opcion) is not None):
+            opcion = int(opcion)
+            if(opcion>=0 and opcion<=1):            
+                if(opcion == 1) :                   
+                    gama = input ("Ingrese la gama que deseas filtar: ")
+                    stock = int(input ("Ingrese las unidades que deseas mostrar: "))
+                    print(tabulate(getAllStockPriceGama(gama, stock), headers="keys", tablefmt="github"))
+
+                    input("seleccione una tecla para continuar.....")
+                elif(opcion == 0):
+                    break
        # elif(opcion == 2) :
         # #   producto = {
            # "codigo_producto": input("Ingrese el codigo del producto: "),

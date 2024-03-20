@@ -108,7 +108,7 @@ if(__name__ == "__main__"):
                 elif(opcion == 4):
                     pedidos.menu()
                 elif(opcion == 5):
-                    menuProducto()
+                   men.menuProducto()
                 elif(opcion == 6):
                     pago.menu()
                 elif(opcion == 0):

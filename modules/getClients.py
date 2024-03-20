@@ -1,7 +1,7 @@
 from tabulate import tabulate
 from modules.getproducto import getAllData
 from modules.crudClientes import getAllCliente as getAllCliente
-from modules.crudEmpleado import getAllDataEmpleado
+from modules.crudEmpleado import getAllEmpleado
 import requests
 
 def getAllCliente():

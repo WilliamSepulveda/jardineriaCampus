@@ -68,5 +68,5 @@ def menu():
                     
                 elif ( opcion == 0):
                     break
-                input("ingresa una tecla para continuar.....")
+                
 

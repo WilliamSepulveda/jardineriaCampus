@@ -30,7 +30,7 @@ def menu():
                 elif (opcion ==0):
                     break
 
-def getAllDataEmpleado():
+def getAllEmpleado():
     #json-server storage/empleado.json -b 5506
     peticion = requests.get("http://localhost:5506")
     data = peticion.json()
@@ -38,7 +38,7 @@ def getAllDataEmpleado():
 
 def nuevoCodigoEmpleado():
     codigodelCliente = list()
-    for val in getAllDataEmpleado():
+    for val in getAllEmpleado():
         codigodelCliente.append(val.get("codigo_empleado"))
         if codigodelCliente:
             return max(codigodelCliente) +  1
