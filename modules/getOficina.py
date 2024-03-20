@@ -8,7 +8,7 @@ import requests
 
 def getAllDataOficina():
     #json-server storage/oficina.json -b 5505
-    peticion = requests.get("http://localhost:5505/oficinas")
+    peticion = requests.get("http://localhost:5504/oficinas")
     data = peticion.json()
     return data 
 
@@ -64,7 +64,8 @@ def menu():
                     print(tabulate(getAllCodigoCiudad(), headers="keys", tablefmt="founded_grid"))
                 elif (opcion == 2):
                     pais = input("ingrese el pais que desea que filtremos: ")
-                    print(tabulate(getAllCiudadTelefono(pais), headers="keys", tablefmt="rounded_grid")) 
+                    input(tabulate(getAllCiudadTelefono(pais), headers="keys", tablefmt="rounded_grid")) 
+                    
                 elif ( opcion == 0):
                     break
                 input("ingresa una tecla para continuar.....")

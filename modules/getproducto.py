@@ -5,7 +5,7 @@ import modules.crudProductos as pro
 
 def getAllData():
     #json-server storage/producto.json -b 5501
-    peticion = requests.get ("http://172.16.102.108:5501")
+    peticion = requests.get ("http://localhost:5507/productos")
     data = peticion.json()
     return  data
 

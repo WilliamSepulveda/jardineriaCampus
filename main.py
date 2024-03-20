@@ -11,6 +11,8 @@ import modules.getEmpleados as empleado
 import modules.getpedido as pedidos
 import modules.getproducto as Repproducto
 import modules.postProducto as CRUDproducto
+import modules.getPagos as pago
+import modules.menu as men
 
 # ACTIVADORES DE JSON SERVER PARA 1 SOLO:
 #  json-server ./storage/producto.json -p 5504 
@@ -90,12 +92,13 @@ if(__name__ == "__main__"):
                         3. Empleado
                         4. Pedidos
                         5. Productos
+                        6. pago
                         0. Salir
 """) 
         opcion = input("\nSelecione una de las opciones: ")
         if(re.match(r'[0-9]+$', opcion) is not None):
             opcion = int(opcion)
-            if(opcion>=0 and opcion<=5):
+            if(opcion>=0 and opcion<=6):
                 if(opcion == 1):
                     cliente.menu()
                 elif(opcion == 2):
@@ -106,8 +109,11 @@ if(__name__ == "__main__"):
                     pedidos.menu()
                 elif(opcion == 5):
                     menuProducto()
+                elif(opcion == 6):
+                    pago.menu()
                 elif(opcion == 0):
                     break
+        input("seleccione una tecla para continuar.....")
     
 
         

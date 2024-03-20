@@ -8,7 +8,7 @@ import requests
 # de los empleados cuyo  jefe tiene un codigo de jefe igual  a 7
 
 def getAllCliente():
-    peticion = requests.get("http://localhost:5503/empleados")
+    peticion = requests.get("http://localhost:5502/empleados")
     data = peticion.json()
     return data
 
@@ -91,7 +91,6 @@ def menu():
     """)
 
         opcion = int(input("\nseleccione una de las opciones: "))
-        opcion = input("\nSeleccione una de las opciones: ")
         if(vali.validacionOpciones(opcion) is not None):
             opcion = int(opcion)
             if(opcion >= 0 and opcion <= 3):
