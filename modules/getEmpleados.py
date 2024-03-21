@@ -8,7 +8,7 @@ import requests
 # de los empleados cuyo  jefe tiene un codigo de jefe igual  a 7
 
 def getAllEmpleado():
-    peticion = requests.get("http://localhost:5502/empleados")
+    peticion = requests.get("http://154.38.171.54:5003/empleados")
     data = peticion.json()
     return data
 
@@ -75,7 +75,7 @@ def getAllNombresApellidosPuestosRepresentantesDeVentas():
 
 def menu():
     while True:
-        os.system("clear")
+        os.system("cls")
         print(""" 
 
 ██████╗ ███████╗██████╗  ██████╗ ██████╗ ████████╗███████╗    ███████╗███╗   ███╗██████╗ ██╗     ███████╗ █████╗ ██████╗  ██████╗ ███████╗

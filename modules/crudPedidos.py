@@ -7,7 +7,7 @@ import modules.getpedido as pe
 
 def menu():
     while True:
-        os.system("clear")
+        os.system("cls")
         print("""
 
  █████╗ ██████╗ ███╗   ███╗██╗███╗   ██╗██╗███████╗████████╗██████╗  █████╗ ██████╗ 
@@ -45,7 +45,7 @@ def menu():
 
 def getAllDataPagos():
     #json-server storage/pago.json -b 5504
-    peticion = requests.get("http://localhost:5504")
+    peticion = requests.get("http://154.38.171.54:5007/pedidos")
     data = peticion.json()
     return data 
 
@@ -69,7 +69,7 @@ def postPedido():
         "codigo_cliente": int(input("Ingrese el codigo del cliente: "))  
     }
     headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
-    peticion = requests.post("http://localhost:5504", headers=headers, data=json.dumps(pedido))
+    peticion = requests.post("http://154.38.171.54:5007/pedidos", headers=headers, data=json.dumps(pedido))
     res = peticion.json()
     return [res]               
                                                               

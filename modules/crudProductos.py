@@ -8,7 +8,7 @@ import modules.getproducto as gP
     #json-server storage/producto.json -b 5501
 def menu():        
     while True:
-        os.system("clear")
+        os.system("cls")
         print("""              
 
  █████╗ ██████╗ ███╗   ███╗██╗███╗   ██╗██╗███████╗████████╗██████╗  █████╗ ██████╗     
@@ -43,7 +43,7 @@ def menu():
 
 def getAllDataPagos():
     #json-server storage/pago.json -b 5504
-    peticion = requests.get("http://localhost:5504/productos")
+    peticion = requests.get("http://154.38.171.54:5008/productos")
     data = peticion.json()
     return data 
 

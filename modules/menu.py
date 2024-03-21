@@ -52,7 +52,7 @@ def menuCliente():
 
 def menuOficina():
     while True:
-        os.system("clear")
+        os.system("cls")
         print("""  
                   
     ____  _                            _     __               __                                     __        

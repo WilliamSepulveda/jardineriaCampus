@@ -7,7 +7,7 @@ import modules.Validaciones as vali
 
 def menu():
     while True:
-        os.system("clear")
+        os.system("cls")
         print("""
 
  █████╗ ██████╗ ███╗   ███╗██╗███╗   ██╗██╗███████╗████████╗██████╗  █████╗ ██████╗ 
@@ -46,7 +46,7 @@ def menu():
 
 def getAllDataOficina():
     #json-server storage/oficina.json -b 5505
-    peticion = request.get("http://localhost:5505/oficinas")
+    peticion = request.get("http://154.38.171.54:5005/oficinas")
     data = peticion.json()
     return data 
 
@@ -69,7 +69,7 @@ def postOficina():
         "linea_direccion2": input("Ingrese otra linea de direccion(opcional): ")  
     }
     headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
-    peticion = requests.post("http://localhost:5505", headers=headers, data=json.dumps(oficina))
+    peticion = requests.post("http://154.38.171.54:5005/oficinas", headers=headers, data=json.dumps(oficina))
     res = peticion.json()
     res["Mensaje"] = "Oficina Guardada"
     return [res]

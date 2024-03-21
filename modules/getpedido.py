@@ -9,7 +9,7 @@ import re
 
 def getAllDataPedido():
     #json-server ./storage/pedido.json -p 5506
-    peticion = requests.get("http://localhost:5506/pedidos")
+    peticion = requests.get("http://154.38.171.54:5007/pedidos")
     data = peticion.json()
     return data 
 
@@ -17,7 +17,7 @@ def getAllDataPedido():
 
 def getAllEstadoPedido():
     pedidosEntregado = []
-    peticion = requests.get("http://localhost:5506/pedidos?estado=Entregado")
+    peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=Entregado")
     data = peticion.json()
     for val in data:
     
@@ -31,7 +31,7 @@ def getAllEstadoPedido():
 
 def getAllPedidosEntregadosAtrasadosDeTiempo():
     pedidosEntregado = []
-    peticion = requests.get("http://localhost:5506/pedidos?estado=Entregado")
+    peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=Entregado")
     data = peticion.json()
     for val in data:
             if val.get("fechaEntrega") is None:
@@ -57,7 +57,7 @@ def getAllPedidosEntregadosAtrasadosDeTiempo():
 
 def getAllPedidosEntregadosDosDiasAntes():
     pedidosEntregado = []
-    peticion = requests.get("http://localhost:5506/pedidos?estado=Entregado")
+    peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=Entregado")
     data = peticion.json()
     for pedido in data:
     
@@ -83,7 +83,7 @@ def getAllPedidosEntregadosDosDiasAntes():
 
 def getAllListadoDePedidosRechazados2009():
     pedidos_rechazados = []
-    peticion = requests.get("http://localhost:5506/pedidos?estado=Rechazado")
+    peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=Rechazado")
     data = peticion.json()
     for pedido in data:                   
         fecha_pedido = pedido.get("fechaPedido")
@@ -101,7 +101,7 @@ def getAllListadoDePedidosRechazados2009():
 
 def getAllListadoPedidosEntregadosMesEnero():
     pedidos_entregados_enero = []
-    peticion = requests.get("http://localhost:5506/pedidos?estado=Entregado")
+    peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=Entregado")
     data = peticion.json()
     for pedido in data:                   
         fecha_entrega = pedido.get("fechaEntrega")
@@ -117,7 +117,7 @@ def getAllListadoPedidosEntregadosMesEnero():
 
 def menu():
     while True:
-        os.system("clear")
+        os.system("cls")
         print("""
               
               

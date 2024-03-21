@@ -6,18 +6,18 @@ import re
 
 def getAllData():
     #json-server ./storage/producto.json -p 5507
-    peticion = requests.get ("http://localhost:5507/productos")
+    peticion = requests.get ("http://154.38.171.54:5008/productos")
     data = peticion.json()
     return  data
 
 def getproductCodigo(codigo):
-    peticion = requests.get(f"http://localhost:5507/productos{codigo}")
+    peticion = requests.get(f"http://154.38.171.54:5008/productos{codigo}")
     return [peticion.json()] if peticion.ok else []
 # Devuelve un listado con todos los productos que pertenecen a la gama Ornamentales 
 # y que tienen más de 100 unidades en stock. El listado deberá estar ordenado por su precio de venta, 
 # mostrando en primer lugar los de mayor precio.
 def getAllStockPriceGama(gama, stock):
-    peticion = requests.get(f"http://localhost:5507/productos?gama={gama}&cantidadEnStock_gte={stock}&_sort=-precio_venta")
+    peticion = requests.get(f"http://154.38.171.54:5008/productos?gama={gama}&cantidadEnStock_gte={stock}&_sort=-precio_venta")
     condicciones = peticion.json()
     for i, val in enumerate (condicciones):
         condicciones [i] = {
@@ -35,7 +35,7 @@ def getAllStockPriceGama(gama, stock):
 
 def menu():
     while True:
-        os.system("clear")
+        os.system("cls")
         print("""
 
 ██████╗ ███████╗██████╗  ██████╗ ██████╗ ████████╗███████╗███████╗    ██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗ ██████╗ 

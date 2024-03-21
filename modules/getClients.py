@@ -5,7 +5,7 @@ from modules.crudEmpleado import getAllEmpleado
 import requests
 
 def getAllCliente():
-    peticion = requests.get("http://localhost:5501/cliente")
+    peticion = requests.get("http://154.38.171.54:5001/cliente")
     data = peticion.json()
     return data
 

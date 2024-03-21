@@ -6,7 +6,7 @@ import modules.Validaciones as vali
 
 def menu():
     while True:
-        os.system("clear")
+        os.system("cls")
         print("""
 
 █████╗ ██████╗ ███╗   ███╗██╗███╗   ██╗██╗███████╗████████╗██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ ██████╗ ███████╗    ██████╗ ███████╗     ██████╗██╗     ██╗███████╗███╗   ██╗████████╗███████╗███████╗    
@@ -34,7 +34,7 @@ def menu():
 
 def getAllCliente():
 #json-server storage/cliente.json -b 5507
-    peticion = requests.get("http://localhost:5507")
+    peticion = requests.get("http://154.38.171.54:5001/cliente")
     data = peticion.json()
     return data
 
@@ -66,7 +66,7 @@ def postClientes():
         "limite_credito": float(input("Ingrese el limite de credito: "))
     }
     headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
-    peticion = requests.post("http://localhost:5507", headers=headers, data=json.dumps(cliente))
+    peticion = requests.post("http://154.38.171.54:5001/cliente", headers=headers, data=json.dumps(cliente))
     res = peticion.json()
     res["Mensaje"] = "Cliente Agregado"
     return [res]

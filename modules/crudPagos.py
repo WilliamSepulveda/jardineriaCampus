@@ -6,7 +6,7 @@ import modules.Validaciones as vali
 
 def menu():
     while True:
-        os.system("clear")
+        os.system("cls")
         print("""
 
  █████╗ ██████╗ ███╗   ███╗██╗███╗   ██╗██╗███████╗████████╗██████╗  █████╗ ██████╗ 
@@ -45,7 +45,7 @@ def menu():
 
 def getAllDataPagos():
     #json-server storage/pago.json -b 5504
-    peticion = requests.get("http://localhost:5504")
+    peticion = requests.get("http://154.38.171.54:5006/pagos")
     data = peticion.json()
     return data 
 
@@ -59,7 +59,7 @@ def postPagos():
         "total": int(input("Ingrese el total pagado: "))  
     }
     headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
-    peticion = requests.post("http://localhost:5504", headers=headers, data=json.dumps(pago))
+    peticion = requests.post("http://154.38.171.54:5006/pagos", headers=headers, data=json.dumps(pago))
     res = peticion.json()
     return [res]
 

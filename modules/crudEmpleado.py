@@ -8,7 +8,7 @@ import modules.Validaciones as vali
 
 def menu():
     while True:
-        os.system("clear")
+        os.system("cls")
         print("""
 
  █████╗ ██████╗ ███╗   ███╗██╗███╗   ██╗██╗███████╗████████╗██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ ██████╗ ███████╗    ███████╗███╗   ███╗██████╗ ██╗     ███████╗ █████╗ ██████╗  ██████╗     
@@ -32,7 +32,7 @@ def menu():
 
 def getAllEmpleado():
     #json-server storage/empleado.json -b 5506
-    peticion = requests.get("http://localhost:5506")
+    peticion = requests.get("http://154.38.171.54:5003/empleados")
     data = peticion.json()
     return data
 
@@ -58,7 +58,7 @@ def postEmpleados():
         "puesto": input("Ingrese el nombre del puesto: ")
     }
     headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
-    peticion = requests.post("http://localhost:5506", headers=headers, data=json.dumps(empleado))
+    peticion = requests.post("http://154.38.171.54:5003/empleados", headers=headers, data=json.dumps(empleado))
     res = peticion.json()
     res["Mensaje"] = "Empleado Agregado"
     return [res]

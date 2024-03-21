@@ -10,7 +10,7 @@ import modules.getOficina as oficina
 import modules.getEmpleados as empleado
 import modules.getpedido as pedidos
 import modules.getproducto as Repproducto
-import modules.postProducto as CRUDproducto
+import modules.crudProductos as CRUDproducto
 import modules.getPagos as pago
 import modules.menu as men
 
@@ -79,7 +79,7 @@ if(__name__ == "__main__"):
 
 #     # https://patorjk.com/software/taag/#p=display&h=2&v=2&f=Slant&t=Menu%20Principal
     while True:
-        os.system("clear")
+        os.system("cls")
         print(""" 
     __  ___                    ____       _            _             __
    /  |/  /__  ____  __  __   / __ \_____(_)___  _____(_)___  ____ _/ /

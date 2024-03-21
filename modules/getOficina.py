@@ -8,7 +8,7 @@ import requests
 
 def getAllDataOficina():
     #json-server storage/oficina.json -b 5505
-    peticion = requests.get("http://localhost:5504/oficinas")
+    peticion = requests.get("http://154.38.171.54:5005/oficinas")
     data = peticion.json()
     return data 
 
@@ -40,7 +40,7 @@ def getAllCiudadTelefono(pais):
 
 def menu():
     while True:
-        os.system("clear")
+        os.system("cls")
         print(""" 
 
 
