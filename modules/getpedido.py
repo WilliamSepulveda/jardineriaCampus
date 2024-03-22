@@ -16,8 +16,8 @@ def getAllDataPedido():
 
 
 def getAllEstadoPedido():
-    pedidosEntregado = []
-    peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=Entregado")
+    pedidosEntregado = list()
+    peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=")
     data = peticion.json()
     for val in data:
     
@@ -30,54 +30,59 @@ def getAllEstadoPedido():
     return pedidosEntregado
 
 def getAllPedidosEntregadosAtrasadosDeTiempo():
-    pedidosEntregado = []
+    pedidosEntregados = list()
     peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=Entregado")
     data = peticion.json()
-    for val in data:
-            if val.get("fechaEntrega") is None:
-                val["fechaEntrega"] = val.get("fechaEsperada")
-            
-            date_1 = "/".join(val.get("fechaEntrega").split("-")[::-1])
-            date_2 = "/".join(val.get("fechaEsperada").split("-")[::-1])
-
-            start = datetime.strptime(date_1, "%d/%m/%Y")
-            end = datetime.strptime(date_2, "%d/%m/%Y")
-            diff = end.date() - start.date()
-            if diff.days < 0:
-                pedidosEntregado.append({
-                    "código_de_pedido": val.get("codigoPedido"),
-                    "código_de_cliente": val.get("codigoCliente"),
-                    "fechaEsperada": val.get("fechaEsperada"),
-                    "fecha_de_entrega": val.get("fechantrega"),
-                })
-    return pedidosEntregado
-
-# devuelve un listado con el codigo del pedido, codigo cliente, fecha esperada y fecha de entrega de los pedidios cuya 
-#fecha de entrega ha sido al menos dos dias antes de la fecha esperada 
-
-def getAllPedidosEntregadosDosDiasAntes():
-    pedidosEntregado = []
-    peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=Entregado")
-    data = peticion.json()
-    for pedido in data:
     
-        if pedido.get("estado") == "Entregado" and pedido.get("fechaEntrega") is None:
-            pedido["fechaEntrega"] = pedido.get("fechaEsperada")
-        if pedido.get("estado") == "Entregado":
-            date_1 = "/".join(pedido.get("fechaEntrega").split("-")[::-1])
-            date_2 = "/".join(pedido.get("fechaEsperada").split("-")[::-1])
-
+    for val in data:
+        if val.get("fechaEntrega") is None:
+            val["fechaEntrega"] = val.get("fecha_esperada")
+        if val.get("fechaEntrega") is None:
+            continue
+        
+        date_1 = "/".join(val.get("fechaEntrega").split("-")[::-1])
+        date_2 = "/".join(val.get("fecha_esperada").split("-")[::-1])
         start = datetime.strptime(date_1, "%d/%m/%Y")
         end = datetime.strptime(date_2, "%d/%m/%Y")
         diff = end.date() - start.date()
-        if diff.days >= 2:
-                pedidosEntregado.append({
-                    "código_de_pedido": pedido.get("codigoPedido"),
-                    "código_de_cliente": pedido.get("codigoCliente"),
-                    "fechaEsperada": pedido.get("fechaEsperada"),
-                    "fecha_de_entrega": pedido.get("fechaEntrega"),
+        if (diff.days < 0):
+            pedidosEntregados.append({
+                    "Codigo de pedido": val.get("codigo_pedido"),
+                    "Codigo de cliente": val.get("codigo_cliente"),
+                    "Fecha esperada": val.get("fecha_esperada"),
+                    "Fecha de entrega": val.get("fechaEntrega"),
+                    "Dias de retraso": -(diff.days)
                 })
-    return pedidosEntregado
+    return pedidosEntregados
+
+
+# devuelve un listado con el codigo del pedido, codigo cliente, fecha esperada y fecha de entrega de los pedidios cuya 
+#fecha de entrega ha sido al menos dos dias antes de la fecha esperada 
+def getAllPedidosEntregadosAlMenosDosDiasAnteDeEspera():
+    pedidosEntregados = list()
+    peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=Entregado")
+    data = peticion.json()
+    
+    for val in data:
+        if val.get("fechaEntrega") is None:
+            val["fechaEntrega"] = val.get("fecha_esperada")
+        if val.get("fechaEntrega") is None:
+            continue
+        
+        date_1 = "/".join(val.get("fechaEntrega").split("-")[::-1])
+        date_2 = "/".join(val.get("fecha_esperada").split("-")[::-1])
+        start = datetime.strptime(date_1, "%d/%m/%Y")
+        end = datetime.strptime(date_2, "%d/%m/%Y")
+        diff = end.date() - start.date()
+        if (diff.days >= 2):
+            pedidosEntregados.append({
+                    "Codigo de pedido": val.get("codigo_pedido"),
+                    "Codigo de cliente": val.get("codigo_cliente"),
+                    "Fecha esperada": val.get("fecha_esperada"),
+                    "Fecha de entrega": val.get("fechaEntrega"),
+                    "Dias Anticipados": (diff.days)
+                })
+    return pedidosEntregados
 
 
 
@@ -86,13 +91,13 @@ def getAllListadoDePedidosRechazados2009():
     peticion = requests.get("http://154.38.171.54:5007/pedidos?estado=Rechazado")
     data = peticion.json()
     for pedido in data:                   
-        fecha_pedido = pedido.get("fechaPedido")
-        if pedido.get("estado") == "Rechazado" and fecha_pedido.startswith("2009"):            
+        if "2009"   in pedido.get("fecha_pedido"):       
             pedidos_rechazados.append({
                 "estado": pedido.get("estado"),
-                "códigoPedido": pedido.get("codigoPedido"),
-                "códigoCliente": pedido.get("codigoCliente"),
-                "fechaEsperada": pedido.get("fechaEsperada")
+                "código Pedido": pedido.get("codigo_pedido"),
+                "codigo Cliente": pedido.get("codigo_cliente"),
+                "Fecha pedido": pedido.get("fecha_pedido")
+
             }) 
     return pedidos_rechazados
             
@@ -109,8 +114,8 @@ def getAllListadoPedidosEntregadosMesEnero():
             date_1 = "/".join(fecha_entrega.split("-")[::-1])
             if date_1.startswith("01"):
                 pedidos_entregados_enero.append({
-                    "Código del pedido": pedido.get("codigoPedido"),
-                    "Código del cliente": pedido.get("codigoCliente"),
+                    "Código del pedido": pedido.get("codigo_pedido"),
+                    "Código del cliente": pedido.get("codigo_cliente"),
                     "Fecha de entrega": date_1
                 }) 
     return pedidos_entregados_enero
@@ -147,7 +152,7 @@ def menu():
                     print(tabulate(getAllPedidosEntregadosAtrasadosDeTiempo(), headers="keys", tablefmt="github"))
                     input("Precione una tecla para continuar.........")
                 elif (opcion == 3):
-                    print(tabulate(getAllPedidosEntregadosDosDiasAntes(), headers="keys", tablefmt="github"))
+                    print(tabulate(getAllPedidosEntregadosAlMenosDosDiasAnteDeEspera(), headers="keys", tablefmt="github"))
                     input("Preccione una tecla para continuar.........")
                 elif (opcion == 4):
                 
@@ -159,4 +164,4 @@ def menu():
                 elif (opcion == 0):
                     break
                 else:
-                    print("Opcion no valida")
+                    print("Opcion no valida.")

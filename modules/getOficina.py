@@ -57,16 +57,18 @@ def menu():
 
 """)
         opcion = input("\n seleccione una de las opciones: ")
-        if(val.validacionesOpciones(opcion) is not None):
+        if(val.validacionOpciones(opcion) is not None):
             opcion = int(opcion)
             if(opcion >= 0 and opcion <= 2):
                 if (opcion == 1):
                     print(tabulate(getAllCodigoCiudad(), headers="keys", tablefmt="founded_grid"))
                 elif (opcion == 2):
                     pais = input("ingrese el pais que desea que filtremos: ")
-                    input(tabulate(getAllCiudadTelefono(pais), headers="keys", tablefmt="rounded_grid")) 
-                    
+                    print(tabulate(getAllCiudadTelefono(pais), headers="keys", tablefmt="founded_grid"))
+
+                  
                 elif ( opcion == 0):
                     break
+            input("presione una tecla para continuar....") 
                 
 

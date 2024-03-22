@@ -31,7 +31,7 @@ def getAllNombreApellidoemail(codigo):
 def getAllNombrePuestoApellidoEmailJefe(codigo):
     NombrePuestoApellidoEmailJefe = list()
     for val in getAllEmpleado():
-        if(val.get("codigo_empleado")) == codigo:
+        if((val.get("codigo_empleado") == codigo)):
             NombrePuestoApellidoEmailJefe.append(
                 {                  
                 "puesto": val.get("puesto"),
@@ -59,18 +59,18 @@ def getAllJefeNombreApellidoEmailJefe(codigo):
                
     return JefeNombreApellidoEmailJefe 
 
-def getAllNombresApellidosPuestosRepresentantesDeVentas():
-    nombreApellidosPuestos = []
+def getAllNombreApellidosPuestoNoRepresentantesDeVentas():
+    nombreApellidosPuetos = list()
     for val in getAllEmpleado():
-        if(val.get("puesto") != 'representante de ventas: '):
-            nombreApellidosPuestos.append(
-            {
-                "nombre": val.get("nombre"),
-                "apellidos": f'{val.get("apellido_1"),{val.get("apellido_2")}}',
-                "puesto": val.get("puesto")
-            }
-        )
-    return nombreApellidosPuestos
+        if(val.get("puesto") != 'Representante Ventas'):
+            nombreApellidosPuetos.append(
+                {
+                    "nombre": val.get("nombre"),
+                    "apellidos": f'{val.get("apellido1")} {val.get("apellido2")}',
+                    "puesto": val.get("puesto")
+                }
+            )
+    return nombreApellidosPuetos
 
 
 def menu():
@@ -106,7 +106,7 @@ def menu():
                             print(tabulate(getAllNombrePuestoApellidoEmailJefe(codigo), headers="keys", tablefmt='rounded_grid'))    
                             input("Precione una tecla para continuar.........")
                 elif (opcion == 3):
-                            print(tabulate(getAllNombresApellidosPuestosRepresentantesDeVentas(), headers="keys", tablefmt="github"))
+                            print(tabulate(getAllNombreApellidosPuestoNoRepresentantesDeVentas(), headers="keys", tablefmt="github"))
                             input("Precione una tecla para continuar.........")
                 elif (opcion == 0):
                     break
